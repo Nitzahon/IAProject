@@ -39,7 +39,7 @@ namespace WebApplication
                 LinkButton1.Visible = false;
                 LinkButton2.Visible = false;
                 UserReg.Visible = false;
-                //
+                
             }
 
         }
