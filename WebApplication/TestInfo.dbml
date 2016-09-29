@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Tests" Class="TestInfoDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Tests.mdf;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="TestInfoDataContext" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Pairs" Member="Pairs">
+    <Type Name="Pair">
+      <Column Name="testId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="pairname" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Pair_Test" Member="Tests" ThisKey="testId" OtherKey="majorPairId" Type="Test" />
+      <Association Name="Pair_Test1" Member="Tests1" ThisKey="testId" OtherKey="minorPairId" Type="Test" />
+      <Association Name="Pair_Word" Member="Words" ThisKey="testId" OtherKey="testId" Type="Word" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Test" Member="Tests">
+    <Type Name="Test">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="testName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="majorPairId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="minorPairId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Pair_Test" Member="Pair" ThisKey="majorPairId" OtherKey="testId" Type="Pair" IsForeignKey="true" />
+      <Association Name="Pair_Test1" Member="Pair1" ThisKey="minorPairId" OtherKey="testId" Type="Pair" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Words" Member="Words">
+    <Type Name="Word">
+      <Column Name="testId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="words" Type="System.String" DbType="NVarChar(900) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="isImg" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="groups" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Pair_Word" Member="Pair" ThisKey="testId" OtherKey="testId" Type="Pair" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.login" Member="logins">
+    <Type Name="login">
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="username" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="pwd" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="isTeacher" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>
