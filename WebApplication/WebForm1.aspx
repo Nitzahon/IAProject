@@ -122,6 +122,7 @@
                     }
                     function updateTestEntry(test)
                     {
+                        element = document.getElementById("TestEntry");
                         if(Testing=true)
                         {
                             end= new Date().getTime();
@@ -221,11 +222,14 @@
                                 {
                                     t1= Math.floor(Math.random() * topleft.data.length);
                                     addTextOrImage(topleft.data[t1], topleft.isImage[t1]);
+                                    element.style.color="Yellow";
                                 }
                                 else
                                 {
                                     t1= Math.floor(Math.random() * btmleft.data.length);
                                     addTextOrImage(btmleft.data[t1], btmleft.isImage[t1]);
+                                    element.style.color="#66FF33";
+
                                 }
 
                             }
@@ -235,11 +239,15 @@
                                 {
                                     t1= Math.floor(Math.random() * topright.data.length);
                                     addTextOrImage(topright.data[t1], topright.isImage[t1]);
+                                    element.style.color="Yellow";
+
                                 }
                                 else
                                 {
                                     t1= Math.floor(Math.random() * btmright.data.length);
                                     addTextOrImage(btmright.data[t1], btmright.isImage[t1]);
+                                    element.style.color="#66FF33";
+
                                 }
                             }
                         }
@@ -272,7 +280,9 @@
     <form id="form1" runat="server">
         <div class="house" style="z-index: 1; left: 30px; top: 30px; position: absolute; height: 64px; width: 100px">
             <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="Larger" ForeColor="Yellow"></asp:Label>
+            <br />
             <asp:Label ID="orLeft" runat="server" Font-Bold="True" Font-Size="Larger" ForeColor="White" Text="or"></asp:Label>
+            <br />
             <asp:Label ID="Label1B" runat="server" Font-Bold="True" Font-Size="Larger" ForeColor="#66FF33"></asp:Label>
         </div>            
         <div class="house" style="z-index: 1; left: 30px; bottom: 10px; position: absolute; height: 30px; width: 100px">
@@ -293,7 +303,9 @@
         </div>
         <div class="house" style="z-index: 1; right: 30px; top: 30px; position: absolute; height: 64px; width: 100px">
             <asp:Label ID="Label2" runat="server" Font-Bold="True" Font-Size="Larger" ForeColor="Yellow"></asp:Label>
+            <br />
             <asp:Label ID="orRight" runat="server" Font-Bold="True" Font-Size="Larger" ForeColor="White">or</asp:Label>
+            <br />
             <asp:Label ID="Label2B" runat="server" Font-Bold="True" Font-Size="Larger" ForeColor="#66FF33"></asp:Label>   
         </div>
 
