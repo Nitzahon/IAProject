@@ -19,9 +19,10 @@
                 <script type="text/javascript">                     
                     var obj, img,lab1,lab2,lab1B,lab2B,orl,orr;
                     var Testing=false;
-                    var answered=0;
+                    var answered=20;
                     var topleft,topright,btmleft,btmright;
-                    var Stage=0;
+                    var Stage=-1;
+                    var Start=true;
                     var firstTestMis=[],secondTestMis=[];
                     var firstTestTime=[], secondTestTime=[];
                     var start,end,time;
@@ -48,9 +49,19 @@
                     {
                         var x = e.keyCode;                // Get the Unicode value
                         var y = String.fromCharCode(x);       // Convert the value into a character
-                        if (x == 73 || x == 105 || x == 69 || x == 101)
+                        if(Start=true)
                         {
-                            checkAnswer(x)
+                            if(x== 32)
+                            {
+                                updateTestEntry(e)
+                            }
+                        }
+                        else
+                        {
+                            if (x == 73 || x == 105 || x == 69 || x == 101)
+                            {
+                                checkAnswer(x)
+                            }
                         }
                         
                     }
@@ -99,19 +110,7 @@
                     {
                         try
                         {
-                            if(Stage==0)
-                            {
-                                topleft=null;
-                                topright=null;
-                                btmleft=null;
-                                btmright=null;
-                                lab1.innerHTML=e.g1.Pair1.name;
-                                lab1.style.visibility="visible";
-                                lab2.innerHTML=e.g1.Pair2.name;
-                                lab2.style.visibility="visible";
-                                topleft= e.g1.Pair1;
-                                topright=e.g1.Pair2;
-                            }
+                            
                             updateTestEntry(e);
                         }
                         catch (e)
@@ -122,8 +121,19 @@
                     }
                     function updateTestEntry(test)
                     {
+
                         element = document.getElementById("TestEntry");
-                        if(Testing=true)
+                        if(Start==true)
+                        {
+                            
+                            Start=false
+                            if(Stage==3 || Stage==6)
+                                start=new Date().getTime();
+
+                        }
+                        else
+                        {
+                        if(Testing==true)
                         {
                             end= new Date().getTime();
                             time = end-start;
@@ -145,13 +155,29 @@
                         {
                             Stage++;
                             answered=0;
+                            Start=true;
                             switch(Stage)
                             {
+                                case 0:
+                                    topleft=null;
+                                    topright=null;
+                                    btmleft=null;
+                                    btmright=null;
+                                    lab1.innerHTML=e.g1.Pair1.name;
+                                    lab1.style.visibility="visible";
+                                    lab2.innerHTML=e.g1.Pair2.name;
+                                    lab2.style.visibility="visible";
+                                    topleft= e.g1.Pair1;
+                                    topright=e.g1.Pair2;
+                                    element.innerHTML="Stage 1";
+
+                                    break;
                                 case 1:
                                     lab1.innerHTML=test.g2.Pair1.name;
                                     lab2.innerHTML=test.g2.Pair2.name;
                                     topleft=test.g2.Pair1;
                                     topright=test.g2.Pair2;
+                                    element.innerHTML="Stage 1";
                                     break;
                                 case 2:
                                     orl.style.visibility="visible";
@@ -162,9 +188,13 @@
                                     lab2B.style.visibility="visible";
                                     btmleft= test.g1.Pair1;
                                     btmright=test.g1.Pair2;
+                                    element.innerHTML="Stage 1";
+
                                     break;
                                 case 3:
                                     Testing=true;
+                                    element.innerHTML="Stage 1";
+
                                     break;
                                 case 4:
                                     Testing=false;
@@ -178,6 +208,8 @@
                                     topright=test.g1.Pair1;
                                     btmleft=null;
                                     btmright=null;
+                                    element.innerHTML="Stage 1";
+
                                     break;
                                 case 5:
                                     orl.style.visibility="visible";
@@ -188,9 +220,12 @@
                                     lab2B.style.visibility="visible";
                                     btmleft= test.g2.Pair1;
                                     btmright=test.g2.Pair2;
+                                    element.innerHTML="Stage 1";
+
                                     break;
                                 case 6:
                                     Testing=true;
+                                    element.innerHTML="Stage 1";
 
                                     break;
                                 case 7:
@@ -250,6 +285,7 @@
 
                                 }
                             }
+                        }
                         }
                     }
                     function endTest()
