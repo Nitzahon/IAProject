@@ -42,6 +42,9 @@ namespace WebApplication
     partial void Insertlogin(login instance);
     partial void Updatelogin(login instance);
     partial void Deletelogin(login instance);
+    partial void InsertTestResult(TestResult instance);
+    partial void UpdateTestResult(TestResult instance);
+    partial void DeleteTestResult(TestResult instance);
     #endregion
 		
 		public TestInfoDataContext() : 
@@ -103,6 +106,14 @@ namespace WebApplication
 			get
 			{
 				return this.GetTable<login>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TestResult> TestResults
+		{
+			get
+			{
+				return this.GetTable<TestResult>();
 			}
 		}
 	}
@@ -293,6 +304,8 @@ namespace WebApplication
 		
 		private int _minorPairId;
 		
+		private EntitySet<TestResult> _TestResults;
+		
 		private EntityRef<Pair> _Pair;
 		
 		private EntityRef<Pair> _Pair1;
@@ -315,6 +328,7 @@ namespace WebApplication
 		
 		public Test()
 		{
+			this._TestResults = new EntitySet<TestResult>(new Action<TestResult>(this.attach_TestResults), new Action<TestResult>(this.detach_TestResults));
 			this._Pair = default(EntityRef<Pair>);
 			this._Pair1 = default(EntityRef<Pair>);
 			OnCreated();
@@ -428,6 +442,19 @@ namespace WebApplication
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Test_TestResult", Storage="_TestResults", ThisKey="Id", OtherKey="test_Id")]
+		public EntitySet<TestResult> TestResults
+		{
+			get
+			{
+				return this._TestResults;
+			}
+			set
+			{
+				this._TestResults.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Pair_Test", Storage="_Pair", ThisKey="majorPairId", OtherKey="testId", IsForeignKey=true)]
 		public Pair Pair
 		{
@@ -514,6 +541,18 @@ namespace WebApplication
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_TestResults(TestResult entity)
+		{
+			this.SendPropertyChanging();
+			entity.Test = this;
+		}
+		
+		private void detach_TestResults(TestResult entity)
+		{
+			this.SendPropertyChanging();
+			entity.Test = null;
 		}
 	}
 	
@@ -706,6 +745,8 @@ namespace WebApplication
 		
 		private bool _isTeacher;
 		
+		private EntitySet<TestResult> _TestResults;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -722,6 +763,7 @@ namespace WebApplication
 		
 		public login()
 		{
+			this._TestResults = new EntitySet<TestResult>(new Action<TestResult>(this.attach_TestResults), new Action<TestResult>(this.detach_TestResults));
 			OnCreated();
 		}
 		
@@ -801,6 +843,319 @@ namespace WebApplication
 					this._isTeacher = value;
 					this.SendPropertyChanged("isTeacher");
 					this.OnisTeacherChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="login_TestResult", Storage="_TestResults", ThisKey="user_id", OtherKey="user_id")]
+		public EntitySet<TestResult> TestResults
+		{
+			get
+			{
+				return this._TestResults;
+			}
+			set
+			{
+				this._TestResults.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_TestResults(TestResult entity)
+		{
+			this.SendPropertyChanging();
+			entity.login = this;
+		}
+		
+		private void detach_TestResults(TestResult entity)
+		{
+			this.SendPropertyChanging();
+			entity.login = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TestResults")]
+	public partial class TestResult : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private int _user_id;
+		
+		private int _test_Id;
+		
+		private string _MistakesA;
+		
+		private string _MistakesB;
+		
+		private string _TimesA;
+		
+		private string _TimesB;
+		
+		private EntityRef<Test> _Test;
+		
+		private EntityRef<login> _login;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void Onuser_idChanging(int value);
+    partial void Onuser_idChanged();
+    partial void Ontest_IdChanging(int value);
+    partial void Ontest_IdChanged();
+    partial void OnMistakesAChanging(string value);
+    partial void OnMistakesAChanged();
+    partial void OnMistakesBChanging(string value);
+    partial void OnMistakesBChanged();
+    partial void OnTimesAChanging(string value);
+    partial void OnTimesAChanged();
+    partial void OnTimesBChanging(string value);
+    partial void OnTimesBChanged();
+    #endregion
+		
+		public TestResult()
+		{
+			this._Test = default(EntityRef<Test>);
+			this._login = default(EntityRef<login>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_id", DbType="Int NOT NULL")]
+		public int user_id
+		{
+			get
+			{
+				return this._user_id;
+			}
+			set
+			{
+				if ((this._user_id != value))
+				{
+					if (this._login.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onuser_idChanging(value);
+					this.SendPropertyChanging();
+					this._user_id = value;
+					this.SendPropertyChanged("user_id");
+					this.Onuser_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_test_Id", DbType="Int NOT NULL")]
+		public int test_Id
+		{
+			get
+			{
+				return this._test_Id;
+			}
+			set
+			{
+				if ((this._test_Id != value))
+				{
+					if (this._Test.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Ontest_IdChanging(value);
+					this.SendPropertyChanging();
+					this._test_Id = value;
+					this.SendPropertyChanged("test_Id");
+					this.Ontest_IdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MistakesA", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string MistakesA
+		{
+			get
+			{
+				return this._MistakesA;
+			}
+			set
+			{
+				if ((this._MistakesA != value))
+				{
+					this.OnMistakesAChanging(value);
+					this.SendPropertyChanging();
+					this._MistakesA = value;
+					this.SendPropertyChanged("MistakesA");
+					this.OnMistakesAChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MistakesB", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string MistakesB
+		{
+			get
+			{
+				return this._MistakesB;
+			}
+			set
+			{
+				if ((this._MistakesB != value))
+				{
+					this.OnMistakesBChanging(value);
+					this.SendPropertyChanging();
+					this._MistakesB = value;
+					this.SendPropertyChanged("MistakesB");
+					this.OnMistakesBChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimesA", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string TimesA
+		{
+			get
+			{
+				return this._TimesA;
+			}
+			set
+			{
+				if ((this._TimesA != value))
+				{
+					this.OnTimesAChanging(value);
+					this.SendPropertyChanging();
+					this._TimesA = value;
+					this.SendPropertyChanged("TimesA");
+					this.OnTimesAChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimesB", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string TimesB
+		{
+			get
+			{
+				return this._TimesB;
+			}
+			set
+			{
+				if ((this._TimesB != value))
+				{
+					this.OnTimesBChanging(value);
+					this.SendPropertyChanging();
+					this._TimesB = value;
+					this.SendPropertyChanged("TimesB");
+					this.OnTimesBChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Test_TestResult", Storage="_Test", ThisKey="test_Id", OtherKey="Id", IsForeignKey=true)]
+		public Test Test
+		{
+			get
+			{
+				return this._Test.Entity;
+			}
+			set
+			{
+				Test previousValue = this._Test.Entity;
+				if (((previousValue != value) 
+							|| (this._Test.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Test.Entity = null;
+						previousValue.TestResults.Remove(this);
+					}
+					this._Test.Entity = value;
+					if ((value != null))
+					{
+						value.TestResults.Add(this);
+						this._test_Id = value.Id;
+					}
+					else
+					{
+						this._test_Id = default(int);
+					}
+					this.SendPropertyChanged("Test");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="login_TestResult", Storage="_login", ThisKey="user_id", OtherKey="user_id", IsForeignKey=true)]
+		public login login
+		{
+			get
+			{
+				return this._login.Entity;
+			}
+			set
+			{
+				login previousValue = this._login.Entity;
+				if (((previousValue != value) 
+							|| (this._login.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._login.Entity = null;
+						previousValue.TestResults.Remove(this);
+					}
+					this._login.Entity = value;
+					if ((value != null))
+					{
+						value.TestResults.Add(this);
+						this._user_id = value.user_id;
+					}
+					else
+					{
+						this._user_id = default(int);
+					}
+					this.SendPropertyChanged("login");
 				}
 			}
 		}

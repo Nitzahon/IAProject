@@ -56,7 +56,7 @@ namespace WebApplication
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string test = GridView1.SelectedRow.Cells[1].Text;
+            HttpContext.Current.Session["TestID"] = GridView1.SelectedRow.Cells[1].Text;
             Response.Redirect("WebForm1.aspx?TestID=" + GridView1.SelectedRow.Cells[1].Text);
         }
         private List<Test> GetDataToBind()

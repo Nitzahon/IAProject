@@ -95,7 +95,7 @@
                         {
                             img=document.getElementById("Image1").style.visibility = "hidden"; 
                             updateTestEntry(obj);
-                           
+
                         }
                         else if(data2!=null && data2.indexOf(obj.curr)>-1)
                         {
@@ -304,6 +304,26 @@
                         element.style.color="red";
                         element.style.fontSize="Largest";
                         element.innerHTML = "Completed"
+
+                        var ftm = JSON.stringify(firstTestMis);
+                        var stm = JSON.stringify(secondTestMis);
+                        var ftt = JSON.stringify(firstTestTime);
+                        var stt = JSON.stringify(secondTestTime);
+
+                        // Make the ajax call
+                        $.ajax({
+                            type: "POST",
+                            url: "WebForm1.aspx/Done", // the method we are calling
+                            contentType: "application/json; charset=utf-8",
+                            data: {ids: ftm, stm, ftt, stt },
+                            dataType: "json",
+                            success: function (result) {
+                                alert('Yay! It worked!');               
+                            },
+                            error: function (result) {
+                                alert('Oh no :(');
+                            }
+                        });
                     }
                     function addTextOrImage(entry, bool)
                     {

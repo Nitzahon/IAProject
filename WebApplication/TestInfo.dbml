@@ -16,6 +16,7 @@
       <Column Name="description" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="majorPairId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="minorPairId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Test_TestResult" Member="TestResults" ThisKey="Id" OtherKey="test_Id" Type="TestResult" />
       <Association Name="Pair_Test" Member="Pair" ThisKey="majorPairId" OtherKey="testId" Type="Pair" IsForeignKey="true" />
       <Association Name="Pair_Test1" Member="Pair1" ThisKey="minorPairId" OtherKey="testId" Type="Pair" IsForeignKey="true" />
     </Type>
@@ -35,6 +36,20 @@
       <Column Name="username" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="pwd" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="isTeacher" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="login_TestResult" Member="TestResults" ThisKey="user_id" OtherKey="user_id" Type="TestResult" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TestResults" Member="TestResults">
+    <Type Name="TestResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="test_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MistakesA" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="MistakesB" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="TimesA" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="TimesB" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="Test_TestResult" Member="Test" ThisKey="test_Id" OtherKey="Id" Type="Test" IsForeignKey="true" />
+      <Association Name="login_TestResult" Member="login" ThisKey="user_id" OtherKey="user_id" Type="login" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

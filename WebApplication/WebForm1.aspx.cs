@@ -8,14 +8,18 @@ using System.Web.Services;
 using System.Diagnostics;
 using System.Web.Script.Serialization;
 using IATest;
+using System.Data.Sql;
+using System.Data.SqlClient;
 
 namespace WebApplication
 {
 
     public partial class WebForm1 : System.Web.UI.Page
-    { 
-       IATest.IATest demotest;
-       public string data; 
+    {
+        IATest.IATest demotest;
+        public string data;
+        TestInfoDataContext db;
+        string connectionstring = GlobalVariables.DbPath;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (HttpContext.Current.Session["UserID"] == null)
@@ -37,7 +41,7 @@ namespace WebApplication
                                  w.pairname
                              }).Take(1);
 
-                List<string> Titles = query.FirstOrDefault().pairname.Split('-').ToList(); 
+                List<string> Titles = query.FirstOrDefault().pairname.Split('-').ToList();
                 //ExtenMethods.Populate<bool>(b1, false);
                 //ExtenMethods.Populate<bool>(b2, false);
                 //b1[0] = true;
@@ -52,57 +56,94 @@ namespace WebApplication
                            };
 
                 var right = from w in db.Words
-                           where ((w.testId == query.FirstOrDefault().testId) && (w.groups == true))
-                           select new
-                           {
-                               w.words,
-                               w.isImg
-                           };
-                DualList input1 = new DualList(new Lister(Titles[0], left.Select(a => a.words).ToList(), left.Select(a => a.isImg).ToList()),new Lister(Titles[1], right.Select(a => a.words).ToList(), right.Select(a => a.isImg).ToList()));
-                
-                query = (from t in db.Tests
-                             where t.Id == id
-                             from w in db.Pairs
-                             where (w.testId == t.minorPairId)
-                             select new
-                             {
-                                 w.testId,
-                                 w.pairname
-                             }).Take(1);
-
-                Titles = query.FirstOrDefault().pairname.Split('-').ToList();
-
-
-                left = from w in db.Words
-                           where ((w.testId == query.FirstOrDefault().testId) && (w.groups == false))
-                           select new
-                           {
-                               w.words,
-                               w.isImg
-                           };
-
-                right = from w in db.Words
                             where ((w.testId == query.FirstOrDefault().testId) && (w.groups == true))
                             select new
                             {
                                 w.words,
                                 w.isImg
                             };
+                DualList input1 = new DualList(new Lister(Titles[0], left.Select(a => a.words).ToList(), left.Select(a => a.isImg).ToList()), new Lister(Titles[1], right.Select(a => a.words).ToList(), right.Select(a => a.isImg).ToList()));
+
+                query = (from t in db.Tests
+                         where t.Id == id
+                         from w in db.Pairs
+                         where (w.testId == t.minorPairId)
+                         select new
+                         {
+                             w.testId,
+                             w.pairname
+                         }).Take(1);
+
+                Titles = query.FirstOrDefault().pairname.Split('-').ToList();
+
+
+                left = from w in db.Words
+                       where ((w.testId == query.FirstOrDefault().testId) && (w.groups == false))
+                       select new
+                       {
+                           w.words,
+                           w.isImg
+                       };
+
+                right = from w in db.Words
+                        where ((w.testId == query.FirstOrDefault().testId) && (w.groups == true))
+                        select new
+                        {
+                            w.words,
+                            w.isImg
+                        };
                 DualList input2 = new DualList(new Lister(Titles[0], left.Select(a => a.words).ToList(), left.Select(a => a.isImg).ToList()), new Lister(Titles[1], right.Select(a => a.words).ToList(), right.Select(a => a.isImg).ToList()));
                 demotest = new IATest.IATest(input1, input2, 20);
-                
+
                 data = new JavaScriptSerializer().Serialize(demotest);
                 Console.WriteLine(data);
 
             }
 
-            
+
         }
 
-        
-        
-        
+        [WebMethod]
+        public static void Done(string[] ftm, string[] stm, string[] ftt, string[] stt)
+        {
+            string connectionstring = GlobalVariables.DbPath;
+            String[] ftM = ftm;
+            String[] stM = stm;
+            String[] ftT = ftt;
+            String[] stT = stt;
+            TestInfoDataContext db = new TestInfoDataContext(GlobalVariables.DbPath);
+
+
+
+            if (!db.DatabaseExists())
+            {
+                db.CreateDatabase();
+            }
+            TestResult tes = new TestResult
+            {
+                user_id = Convert.ToInt32(HttpContext.Current.Session["UserID"].ToString()),
+                test_Id = Convert.ToInt32(HttpContext.Current.Session["TestID"].ToString()),
+                MistakesA = string.Join(",", ftM),
+                MistakesB = string.Join(",", stM),
+                TimesA = string.Join(",", ftT),
+                TimesB = string.Join(",", stT)
+
+            };
+            SqlConnection conn = new SqlConnection(connectionstring);
+            conn.Open();
+            db.TestResults.InsertOnSubmit(tes);
+            db.SubmitChanges();
+            WebForm1 frm1 = new WebForm1();
+
+                frm1.Response.Redirect("TeacherArea.aspx");
+
+            // Do whatever processing you want
+            // However, you cannot access server controls
+            // in a static web method.
+        }
+
+
 
     }
-
 }
+
