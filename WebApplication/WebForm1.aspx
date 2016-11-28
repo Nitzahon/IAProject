@@ -134,6 +134,7 @@
                         topleft= e.g1.Pair1;
                         topright=e.g1.Pair2;
                         element.innerHTML="Stage 1";
+                        
                     }
                     function updateTestEntry(test)
                     {
@@ -305,24 +306,24 @@
                         element.style.fontSize="Largest";
                         element.innerHTML = "Completed"
 
-                        var ftm = JSON.stringify(firstTestMis);
-                        var stm = JSON.stringify(secondTestMis);
-                        var ftt = JSON.stringify(firstTestTime);
-                        var stt = JSON.stringify(secondTestTime);
+                        var ftm = firstTestMis;
+                        var stm = secondTestMis;
+                        var ftt =firstTestTime;
+                        var stt = secondTestTime;
 
                         // Make the ajax call
                         $.ajax({
                             type: "POST",
                             url: "WebForm1.aspx/Done", // the method we are calling
                             contentType: "application/json; charset=utf-8",
-                            data: {ids: ftm, stm, ftt, stt },
+                            data: JSON.stringify({ftms:ftm, stms:stm, ftts:ftt, stts:stt }),
+                            
                             dataType: "json",
                             success: function (result) {
-                                alert('Yay! It worked!');               
+                                alert('Test Completed, Data Saved.'); 
+                                window.location = "TeacherArea.aspx"
                             },
-                            error: function (result) {
-                                alert('Oh no :(');
-                            }
+                            error:function(result){alert('Exeption:'+result);}
                         });
                     }
                     function addTextOrImage(entry, bool)

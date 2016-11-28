@@ -18,7 +18,6 @@ namespace WebApplication
     {
         IATest.IATest demotest;
         public string data;
-        TestInfoDataContext db;
         string connectionstring = GlobalVariables.DbPath;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -42,10 +41,7 @@ namespace WebApplication
                              }).Take(1);
 
                 List<string> Titles = query.FirstOrDefault().pairname.Split('-').ToList();
-                //ExtenMethods.Populate<bool>(b1, false);
-                //ExtenMethods.Populate<bool>(b2, false);
-                //b1[0] = true;
-                //b1[1] = true;
+
 
                 var left = from w in db.Words
                            where ((w.testId == query.FirstOrDefault().testId) && (w.groups == false))
@@ -104,13 +100,13 @@ namespace WebApplication
         }
 
         [WebMethod]
-        public static void Done(string[] ftm, string[] stm, string[] ftt, string[] stt)
+        public static void Done(string[] ftms, string[] stms, string[] ftts, string[] stts)
         {
             string connectionstring = GlobalVariables.DbPath;
-            String[] ftM = ftm;
-            String[] stM = stm;
-            String[] ftT = ftt;
-            String[] stT = stt;
+            String[] ftM = ftms;
+            String[] stM = stms;
+            String[] ftT = ftts;
+            String[] stT = stts;
             TestInfoDataContext db = new TestInfoDataContext(GlobalVariables.DbPath);
 
 
@@ -121,6 +117,7 @@ namespace WebApplication
             }
             TestResult tes = new TestResult
             {
+                Id = (db.TestResults.Any()) ? db.TestResults.Max(x => x.Id) + 1 : 0,
                 user_id = Convert.ToInt32(HttpContext.Current.Session["UserID"].ToString()),
                 test_Id = Convert.ToInt32(HttpContext.Current.Session["TestID"].ToString()),
                 MistakesA = string.Join(",", ftM),
@@ -133,9 +130,7 @@ namespace WebApplication
             conn.Open();
             db.TestResults.InsertOnSubmit(tes);
             db.SubmitChanges();
-            WebForm1 frm1 = new WebForm1();
 
-                frm1.Response.Redirect("TeacherArea.aspx");
 
             // Do whatever processing you want
             // However, you cannot access server controls
