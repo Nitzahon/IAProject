@@ -20,6 +20,7 @@ namespace WebApplication
             {
                 //GridView1.DataSource = GetDataToBind();
                 //GridView1.DataBind();
+
             }
             TestInfoDataContext db = new TestInfoDataContext(GlobalVariables.DbPath);
 
