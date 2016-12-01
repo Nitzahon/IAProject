@@ -165,8 +165,9 @@
                                 secondTestMis.push(miss);  
                             }
                             start=new Date().getTime();
-                            miss=0;
+                            
                         }
+                        miss=0;
                         answered++;
                         if(answered == 20)
                         {
