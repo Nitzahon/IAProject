@@ -26,6 +26,8 @@
         <asp:LinkButton ID="LinkButton2" runat="server" OnClick="LinkButton2_Click">Test Creation</asp:LinkButton>
         <br /><br />
         <asp:LinkButton ID="UserReg" runat="server" OnClick="UserReg_Click">UserRegistration</asp:LinkButton>
+         <br /><br />
+        <asp:LinkButton ID="TestResults" runat="server" OnClick="TestResults_Click">Test Results</asp:LinkButton>
     </div>
     </form>
 </body>

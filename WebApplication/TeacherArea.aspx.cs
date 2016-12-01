@@ -39,6 +39,7 @@ namespace WebApplication
                 LinkButton1.Visible = false;
                 LinkButton2.Visible = false;
                 UserReg.Visible = false;
+                TestResults.Visible = false;
                 
             }
 
@@ -77,6 +78,11 @@ namespace WebApplication
         protected void UserReg_Click(object sender, EventArgs e)
         {
             Response.Redirect("Registration.aspx");
+        }
+
+        protected void TestResults_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ResultsPage.aspx");
         }
     }
 }
