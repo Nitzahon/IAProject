@@ -133,7 +133,7 @@
                         lab2.style.visibility="visible";
                         topleft= e.g1.Pair1;
                         topright=e.g1.Pair2;
-                        element.innerHTML="Stage 1";
+                        element.innerHTML="<font color='#FFFFFF'>Put a left finger on the <b>E</b> key for items that belong to the category <font color='#336600'>European Americans</font>. <br>Put a right finger on the <b>I</b> key for items that belong to the category <font color='#336600'> Americans</font>.<br>Items will appear one at a time.<br><br>If you make a mistake, a red <font color='#ff0000'><b>X</b></font> will appear. Press the other key to continue.<br><u>Go as fast as you can</u> while being accurate.<br><br></font>";
                         
                     }
                     function updateTestEntry(test)
