@@ -133,7 +133,7 @@
                         lab2.style.visibility="visible";
                         topleft= e.g1.Pair1;
                         topright=e.g1.Pair2;
-                        element.innerHTML="<font color='#FFFFFF'>Put a left finger on the <b>E</b> key for items that belong to the category <font color='#336600'>European Americans</font>. <br>Put a right finger on the <b>I</b> key for items that belong to the category <font color='#336600'> Americans</font>.<br>Items will appear one at a time.<br><br>If you make a mistake, a red <font color='#ff0000'><b>X</b></font> will appear. Press the other key to continue.<br><u>Go as fast as you can</u> while being accurate.<br><br></font>";
+                        element.innerHTML="<font color='#FFFFFF'>Put a left finger on the <b>E</b> key for items that belong to the category <font color='Yellow'>"+e.g1.Pair1.name+"</font>. <br>Put a right finger on the <b>I</b> key for items that belong to the category <font color='Yellow'>"+e.g1.Pair2.name+"</font>.<br>Items will appear one at a time.<br><br>If you make a mistake, a red <font color='#ff0000'><b>X</b></font> will appear. Press the other key to continue.<br><u>Go as fast as you can</u> while being accurate.<br><br></font>";
                         
                     }
                     function updateTestEntry(test)
@@ -183,7 +183,7 @@
                                     lab2.innerHTML=test.g2.Pair2.name;
                                     topleft=test.g2.Pair1;
                                     topright=test.g2.Pair2;
-                                    element.innerHTML="Stage 2";
+                                    element.innerHTML="<font color='#FFFFFF'>Put a left finger on the <b>E</b> key for items that belong to the category <font color='Yellow'>"+test.g2.Pair1.name+"</font>. <br>Put a right finger on the <b>I</b> key for items that belong to the category <font color='Yellow'>"+test.g2.Pair2.name+"</font>.<br>Items will appear one at a time.<br><br>If you make a mistake, a red <font color='#ff0000'><b>X</b></font> will appear. Press the other key to continue.<br><u>Go as fast as you can</u> while being accurate.<br><br></font>";
                                     break;
                                 case 2:
                                     orl.style.visibility="visible";
@@ -194,7 +194,7 @@
                                     lab2B.style.visibility="visible";
                                     btmleft= test.g1.Pair1;
                                     btmright=test.g1.Pair2;
-                                    element.innerHTML="Stage 3";
+                                    element.innerHTML="<font color='#FFFFFF'>Put a left finger on the <b>E</b> key for <font color='Yellow'>"+test.g2.Pair1.name+"</font> and for <font color='Green'>"+test.g1.Pair1.name+"</font>.<br>Put a left finger on the <b>I</b> key for <font color='Yellow'>"+test.g2.Pair2.name+"/font> and for  <font color='Green'>"+test.g1.Pair2.name+"</font>.<br>Each item belongs to only one category.<br><br>If you make a mistake, a red <font color='#ff0000'><b>X</b></font> will appear. Press the other key to continue.<br><u>Go as fast as you can</u> while being accurate.<br><br></font>";
 
                                     break;
                                 case 3:
@@ -357,7 +357,7 @@
             <asp:HiddenField ID="HiddenField1" runat="server" Value="0"/>
             <asp:Label ID="Label3" runat="server" Text="Label" Font-Bold="True" Font-Size="Larger" ForeColor="Yellow" Visible="False"></asp:Label>
             </div>
-        <div class="house" style="z-index: 1; margin-left: auto; margin-right: auto; margin-top: 100px; margin-bottom: 10px; width: 100px">
+        <div class="house" style="z-index: 1; margin-left: auto; margin-right: auto; margin-top: 100px; margin-bottom: 10px; width: 640px">
             
             
 
